@@ -149,12 +149,15 @@ input.on('noteon', function (msg) {
       break;
 
     case 50:
+      xqx.on(msg.velocity * 100)
       xqx.colorRgb(255, 0, 0, 70);
       break;
     case 51:
+      xqx.on(msg.velocity * 100)
       xqx.colorRgb(0, 255, 0, 70);
       break;
     case 52:
+      xqx.on(msg.velocity * 100)
       xqx.colorRgb(0, 0, 255, 70);
       break;
 
@@ -214,7 +217,7 @@ input.on('noteon', function (msg) {
       //xqx.waveform(100, 100, 50, 3500, false, 500, 10e30 , 0.6, 4);
       //xqr.waveform(200, 100, 50, 3500, false, 500, 10e30 ,0.6, 1);
       //xqx.waveform(50, 50, 80, 3500, true, 200, 5);
-      xqx.waveform(360, 0, msg.velocity, 6000, true, 25, 1, 0.5, 0);
+      xqx.waveform(360, 0, msg.velocity, 6000, false, 100, 10e30, 0.5, 0);
       break;
 
     case 90:
