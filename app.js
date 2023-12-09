@@ -92,7 +92,8 @@ client.on('light-offline', function(light) {
 });
 
 client.on('listening', function() {
-  const address = client.address();
+  const address = client.address(); 
+
   console.log(
     'Started LIFX listening on ' +
     address.address + ':' + address.port + '\n'
@@ -101,26 +102,50 @@ client.on('listening', function() {
 
 
 
-var easymidi = require('easymidi');
-var input = new easymidi.Input('loopMIDI Port');
-console.log(lightsIds);
+let easymidi = require('easymidi');
+let input = new easymidi.Input('loopMIDI Port');
+
 input.on('noteon', function (msg) {
-  let xqr = client.light('d073d55bc143');
-  let xqx = client.light('d073d562b1ac');
+  let xqr = client.light(lightsIds[0]);
+  let xqx = client.light(lightsIds[1]);
   console.log(msg);
   switch (msg.note){
     case 1:
-      xqr.off(0)
+      xqr.off(0);
       break;
     case 2:
       xqx.off(0);
       break;
 
     case 3:
-      xqr.on(70)
+      xqr.off(msg.velocity * 100);
       break;
     case 4:
-      xqx.on(70);
+      xqx.off(msg.velocity * 100);
+      break;
+
+    case 5:
+      xqr.off(msg.velocity);
+      break;
+    case 6:
+      xqx.off(msg.velocity);
+      break;
+
+    case 7:
+      xqr.on(0);
+      break;
+    case 8:
+      xqx.on(0);
+      break;
+    case 9:
+      xqr.on(msg.velocity);
+      break;
+    case 10:
+      xqx.on(msg.velocity);
+      break;
+    case 11:
+      // setter invokes callback with ticks, which will define its length
+
       break;
 
     case 50:
@@ -201,6 +226,14 @@ input.on('noteon', function (msg) {
 
   }
 });
+
+const leCount = async () => {
+
+}
+
+input.on('clock', () =>{
+  console.log('tick');
+})
 
 client.init();
 
